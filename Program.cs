@@ -79,6 +79,9 @@ namespace ByteBank {
                     case 1:
                         RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
                         break;
+                    case 2:
+                        DeletarUsuario(cpfs,titulares, senhas, saldos);
+                        break;
                     case 3:
                         ListarTodasAsContas(cpfs, titulares, senhas, saldos);
                         break;
