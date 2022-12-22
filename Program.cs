@@ -15,6 +15,44 @@ namespace ByteBank {
             Console.WriteLine("0 - Para sair do programa");
         }
 
+        static void optionAlteracao() {
+            Console.WriteLine("Digite a opção desejada: ");
+            Console.WriteLine("1 - Alterar CPF");
+            Console.WriteLine("2 - Alterar Titular");
+            Console.WriteLine("3 - Alterar Senha");
+            Console.WriteLine("3 - Alterar Saldo");
+        }
+
+        static void AlterarContaDeUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos ) {
+            Console.Write("Digite o cpf da conta que será alterada: ");
+            string cpfParaAlterar = Console.ReadLine();
+            int indexParaAlterar = cpfs.FindIndex(cpf => cpf == cpfParaAlterar);
+
+            if (indexParaAlterar == -1) {
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Não é possível exibir esta conta");
+                Console.WriteLine("MOTIVO: Conta não encontrada");
+                Console.WriteLine("-----------------------------------");
+            }
+            else {
+                optionAlteracao();
+                int option = (int.Parse(Console.ReadLine()));
+                switch (option) {
+                    case 1:
+                        AlterarCPF(indexParaAlterar, cpfs);
+                        break;
+                }
+            } 
+        }
+
+        static void AlterarCPF( int index, List<string> cpfs) {
+            Console.WriteLine("Digite o novo CPF: ");
+            cpfs[index] = Console.ReadLine();
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("CPF alterado com sucesso!");
+            Console.WriteLine("-----------------------------------");
+        }
+
         static void ListarTodasAsContas( List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos ) {
             for (int i = 0; i < cpfs.Count; ++i) {
                 Console.WriteLine("-----------------------------------");
@@ -41,7 +79,7 @@ namespace ByteBank {
 
         static void ApresentaConta( int index, List<string> cpfs, List<string> titulares, List<double> saldos ) {
             Console.WriteLine("-----------------------------------");
-            Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R$ {saldos[index]:F2}");
+            Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R$ {saldos[index].ToString("C")}");
             Console.WriteLine("-----------------------------------");
 
         }
@@ -122,6 +160,9 @@ namespace ByteBank {
                         break;
                     case 5:
                         ApresentarValorAcumulado(saldos);
+                        break;
+                    case 6:
+                        AlterarContaDeUsuario(cpfs, titulares, senhas, saldos);
                         break;
                 }
 
