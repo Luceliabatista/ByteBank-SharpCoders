@@ -20,10 +20,10 @@ namespace ByteBank {
             Console.WriteLine("1 - Alterar CPF");
             Console.WriteLine("2 - Alterar Titular");
             Console.WriteLine("3 - Alterar Senha");
-            Console.WriteLine("3 - Alterar Saldo");
+            Console.WriteLine("4 - Alterar Saldo");
         }
 
-        static void AlterarContaDeUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos ) {
+        static void AlterarContaDeUsuario( List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos ) {
             Console.Write("Digite o cpf da conta que será alterada: ");
             string cpfParaAlterar = Console.ReadLine();
             int indexParaAlterar = cpfs.FindIndex(cpf => cpf == cpfParaAlterar);
@@ -41,15 +41,45 @@ namespace ByteBank {
                     case 1:
                         AlterarCPF(indexParaAlterar, cpfs);
                         break;
+                    case 2:
+                        AlterarTitular(indexParaAlterar, titulares);
+                        break;
+                    case 3:
+                        AlterarSenha(indexParaAlterar, senhas);
+                        break;
+                    case 4:
+                        AlterarSaldo(indexParaAlterar, saldos);
+                        break;
                 }
-            } 
+            }
         }
 
-        static void AlterarCPF( int index, List<string> cpfs) {
+        static void AlterarCPF( int index, List<string> cpfs ) {
             Console.WriteLine("Digite o novo CPF: ");
             cpfs[index] = Console.ReadLine();
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("CPF alterado com sucesso!");
+            Console.WriteLine("-----------------------------------");
+        }
+        static void AlterarTitular( int index, List<string> titulares ) {
+            Console.WriteLine("Digite o novo Titular: ");
+            titulares[index] = Console.ReadLine();
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Titular alterado com sucesso!");
+            Console.WriteLine("-----------------------------------");
+        }
+        static void AlterarSenha( int index, List<string> senhas ) {
+            Console.WriteLine("Digite a nova Senha: ");
+            senhas[index] = Console.ReadLine();
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Senha alterado com sucesso!");
+            Console.WriteLine("-----------------------------------");
+        }
+        static void AlterarSaldo( int index, List<double> saldos ) {
+            Console.WriteLine("Digite o novo Saldo: ");
+            saldos[index] = double.Parse(Console.ReadLine());
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Saldo alterado com sucesso!");
             Console.WriteLine("-----------------------------------");
         }
 
@@ -92,7 +122,7 @@ namespace ByteBank {
             Console.WriteLine("Digite a senha: ");
             senhas.Add(Console.ReadLine());
             Console.WriteLine("Digite seu saldo: ");
-            saldos.Add(double.Parse(Console.ReadLine(), new CultureInfo("en-US")));
+            saldos.Add(double.Parse(Console.ReadLine()));
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Novo usuário registrado com sucesso!");
             Console.WriteLine("-----------------------------------");
