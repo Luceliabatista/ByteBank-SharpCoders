@@ -8,10 +8,11 @@ namespace ByteBank
 {
     internal class AcoesParaContasDeUsuarios
     {
-        public string CPF;
-        public string Titular;
-        public string Senha;
-        public List<double> Saldo;
+
+        public List<string> cpfs = new List<string>();
+        public List<string> titulares = new List<string>();
+        public List<string> senhas = new List<string>();
+        public List<double> saldos = new List<double>();
 
         public void ShowMenu()
         {
@@ -127,15 +128,15 @@ namespace ByteBank
             }
             else
             {
+                Console.WriteLine("-----------------------------------");
                 ApresentaConta(indexParaApresentar, cpfs, titulares, saldos);
+                Console.WriteLine("-----------------------------------");
             }
         }
 
         public void ApresentaConta(int index, List<string> cpfs, List<string> titulares, List<double> saldos)
         {
-            Console.WriteLine("-----------------------------------");
             Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R$ {saldos[index].ToString("C")}");
-            Console.WriteLine("-----------------------------------");
 
         }
 
