@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,7 +35,10 @@ namespace ByteBank
             Console.WriteLine("2 - Alterar Titular");
             Console.WriteLine("3 - Alterar Senha");
             Console.WriteLine("4 - Depositar");
-            Console.WriteLine("5 - Tranferir saldo");
+            Console.WriteLine("5 - Sacar");
+            Console.WriteLine("6 - Tranferir");
+            Console.WriteLine("0 - Para sair do programa");
+
         }
 
         public void AlterarContaDeUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
@@ -59,6 +63,9 @@ namespace ByteBank
                 int option = (int.Parse(Console.ReadLine()));
                 switch (option)
                 {
+                    case 0:
+                        Console.WriteLine("Estou encerrando o programa...");
+                        break;
                     case 1:
                         AlterarCPF(indexParaAlterar, cpfs);
                         break;
@@ -72,43 +79,14 @@ namespace ByteBank
                         DepositarSaldo(indexParaAlterar, saldos);
                         break;
                     case 5:
+                        SacarSaldo(indexParaAlterar, saldos);
+                        break;
+                    case 6:
                         TransferirValoresEntreContas(indexParaAlterar, saldos);
                         break;
                 }
             }
 
-            void TransferirValoresEntreContas(int index, List<double> saldos)
-            {
-                Console.Write("Digite o cpf da conta que receberá o valor: ");
-                string cpfParaTransferir = Console.ReadLine();
-                int indexParaTransferir = cpfs.FindIndex(cpf => cpf == cpfParaTransferir);
-
-                if (indexParaTransferir == -1)
-                {
-                    Console.WriteLine("-----------------------------------");
-                    Console.WriteLine("MOTIVO: Conta não encontrada");
-                }
-                else
-                {
-                    Console.WriteLine($"Qual o valor que deseja tranferir para {titulares[indexParaTransferir]}: ");
-                    double valorTranferencia = double.Parse(Console.ReadLine());
-                    if (saldos[indexParaAlterar] >= valorTranferencia)
-                    {
-                        saldos[indexParaAlterar] -= valorTranferencia;
-                        saldos[indexParaTransferir] += valorTranferencia;
-                        Console.WriteLine("Tranferência realizada com sucesso!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Saldo insuficiente para transferência");
-
-                    }
-                }
-                Console.WriteLine("-----------------------------------");
-                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
-                Console.ReadLine();
-                Console.Clear();
-            }
 
 
             void AlterarCPF(int index, List<string> cpfs)
@@ -155,7 +133,65 @@ namespace ByteBank
                 Console.ReadLine();
                 Console.Clear();
             }
+
+            void SacarSaldo(int index, List<double> saldos)
+            {
+                Console.Clear();
+                Console.WriteLine($"Olá {titulares[index]}!");
+
+                Console.WriteLine("Digite o valor de Saque: ");
+                double valorSaque = double.Parse(Console.ReadLine());
+                if (saldos[index] >= valorSaque)
+                {
+                    saldos[index] -= valorSaque;
+                    Console.WriteLine("-----------------------------------");
+                    Console.WriteLine("Saque realizado com sucesso!");
+                }
+                else
+                {
+                    Console.WriteLine("-----------------------------------");
+                    Console.WriteLine("Saldo insuficiente");
+                }
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
+            }
+
+            void TransferirValoresEntreContas(int index, List<double> saldos)
+            {
+                Console.Write("Digite o cpf da conta que receberá o valor: ");
+                string cpfParaTransferir = Console.ReadLine();
+                int indexParaTransferir = cpfs.FindIndex(cpf => cpf == cpfParaTransferir);
+
+                if (indexParaTransferir == -1)
+                {
+                    Console.WriteLine("-----------------------------------");
+                    Console.WriteLine("MOTIVO: Conta não encontrada");
+                }
+                else
+                {
+                    Console.WriteLine($"Qual o valor que deseja tranferir para {titulares[indexParaTransferir]}: ");
+                    double valorTranferencia = double.Parse(Console.ReadLine());
+                    if (saldos[indexParaAlterar] >= valorTranferencia)
+                    {
+                        saldos[indexParaAlterar] -= valorTranferencia;
+                        saldos[indexParaTransferir] += valorTranferencia;
+                        Console.WriteLine("Tranferência realizada com sucesso!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Saldo insuficiente para transferência");
+
+                    }
+                }
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
+            }
         }
+
 
         public void ListarTodasAsContas(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
