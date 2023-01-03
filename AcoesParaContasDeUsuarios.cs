@@ -33,8 +33,8 @@ namespace ByteBank
             Console.WriteLine("1 - Alterar CPF");
             Console.WriteLine("2 - Alterar Titular");
             Console.WriteLine("3 - Alterar Senha");
-            Console.WriteLine("4 - Alterar Saldo");
-            Console.WriteLine("5 - Efetuar Tranferência de saldo");
+            Console.WriteLine("4 - Depositar");
+            Console.WriteLine("5 - Tranferir saldo");
         }
 
         public void AlterarContaDeUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
@@ -69,92 +69,92 @@ namespace ByteBank
                         AlterarSenha(indexParaAlterar, senhas);
                         break;
                     case 4:
-                        AlterarSaldo(indexParaAlterar, saldos);
+                        DepositarSaldo(indexParaAlterar, saldos);
                         break;
                     case 5:
                         TransferirValoresEntreContas(indexParaAlterar, saldos);
                         break;
                 }
             }
-        }
-        public void TransferirValoresEntreContas(int index, List<double> saldos)
-        {
-            Console.Write("Favor confirmar o cpf da conta que irá transferir o valor: ");
-            string cpfParaAlterar = Console.ReadLine();
-            int indexParaAlterar = cpfs.FindIndex(cpf => cpf == cpfParaAlterar);
 
-            Console.Write("Digite o cpf da conta que receberá o valor: ");
-            string cpfParaTransferir = Console.ReadLine();
-            int indexParaTransferir = cpfs.FindIndex(cpf => cpf == cpfParaTransferir);
+            void TransferirValoresEntreContas(int index, List<double> saldos)
+            {
+                Console.Write("Digite o cpf da conta que receberá o valor: ");
+                string cpfParaTransferir = Console.ReadLine();
+                int indexParaTransferir = cpfs.FindIndex(cpf => cpf == cpfParaTransferir);
 
-            if (indexParaTransferir == -1)
-            {
-                Console.WriteLine("-----------------------------------");
-                Console.WriteLine("MOTIVO: Conta não encontrada");
-            }
-            else
-            {
-                Console.WriteLine($"Qual o valor que deseja tranferir para {titulares[indexParaTransferir]}: ");
-                double valorTranferencia = double.Parse(Console.ReadLine());
-                if (saldos[indexParaAlterar] >= valorTranferencia)
+                if (indexParaTransferir == -1)
                 {
-                    saldos[indexParaAlterar] -= valorTranferencia;
-                    saldos[indexParaTransferir] += valorTranferencia;
-                    Console.WriteLine("Tranferência realizada com sucesso!");
+                    Console.WriteLine("-----------------------------------");
+                    Console.WriteLine("MOTIVO: Conta não encontrada");
                 }
                 else
                 {
-                    Console.WriteLine("Saldo insuficiente para transferência");
+                    Console.WriteLine($"Qual o valor que deseja tranferir para {titulares[indexParaTransferir]}: ");
+                    double valorTranferencia = double.Parse(Console.ReadLine());
+                    if (saldos[indexParaAlterar] >= valorTranferencia)
+                    {
+                        saldos[indexParaAlterar] -= valorTranferencia;
+                        saldos[indexParaTransferir] += valorTranferencia;
+                        Console.WriteLine("Tranferência realizada com sucesso!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Saldo insuficiente para transferência");
 
+                    }
                 }
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
             }
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
-            Console.ReadLine();
-            Console.Clear();
-        }
 
 
-        public void AlterarCPF(int index, List<string> cpfs)
-        {
-            Console.WriteLine("Digite o novo CPF: ");
-            cpfs[index] = Console.ReadLine();
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("CPF alterado com sucesso!");
-            Console.WriteLine("-----------------------------------");
-        }
-        public void AlterarTitular(int index, List<string> titulares)
-        {
-            Console.WriteLine("Digite o novo Titular: ");
-            titulares[index] = Console.ReadLine();
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Titular alterado com sucesso!");
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
-            Console.ReadLine();
-            Console.Clear();
-        }
-        public void AlterarSenha(int index, List<string> senhas)
-        {
-            Console.WriteLine("Digite a nova Senha: ");
-            senhas[index] = Console.ReadLine();
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Senha alterado com sucesso!");
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
-            Console.ReadLine();
-            Console.Clear();
-        }
-        public void AlterarSaldo(int index, List<double> saldos)
-        {
-            Console.WriteLine("Digite o novo Saldo: ");
-            saldos[index] = double.Parse(Console.ReadLine());
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Saldo alterado com sucesso!");
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
-            Console.ReadLine();
-            Console.Clear();
+            void AlterarCPF(int index, List<string> cpfs)
+            {
+                Console.WriteLine("Digite o novo CPF: ");
+                cpfs[index] = Console.ReadLine();
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("CPF alterado com sucesso!");
+                Console.WriteLine("-----------------------------------");
+            }
+            void AlterarTitular(int index, List<string> titulares)
+            {
+                Console.WriteLine("Digite o novo Titular: ");
+                titulares[index] = Console.ReadLine();
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Titular alterado com sucesso!");
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            void AlterarSenha(int index, List<string> senhas)
+            {
+                Console.WriteLine("Digite a nova Senha: ");
+                senhas[index] = Console.ReadLine();
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Senha alterado com sucesso!");
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            void DepositarSaldo(int index, List<double> saldos)
+            {
+                Console.Clear();
+                Console.WriteLine($"Olá {titulares[index]}!");
+
+                Console.WriteLine("Digite o valor de depósito: ");
+                saldos[index] += double.Parse(Console.ReadLine());
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Depósito realizado com sucesso!");
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
+            }
         }
 
         public void ListarTodasAsContas(List<string> cpfs, List<string> titulares, List<double> saldos)
@@ -163,10 +163,6 @@ namespace ByteBank
             {
                 Console.WriteLine("-----------------------------------");
                 Console.WriteLine("Não há contas cadastradas até o momento.");
-                Console.WriteLine("-----------------------------------");
-                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
-                Console.ReadLine();
-                Console.Clear();
             }
             else
             {
@@ -176,6 +172,10 @@ namespace ByteBank
                     ApresentaConta(i, cpfs, titulares, saldos);
                 }
             }
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         public void ApresentarUsuario(List<string> cpfs, List<string> titulares, List<double> saldos)
@@ -208,15 +208,15 @@ namespace ByteBank
                 Console.WriteLine("-----------------------------------");
                 Console.WriteLine("Não foi possível deletar este CPF");
                 Console.WriteLine("MOTIVO: Conta não encontrada.");
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
             }
             else
             {
                 Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R$ {saldos[index].ToString("C")}");
             }
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
-            Console.ReadLine();
-            Console.Clear();
         }
 
         public void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
