@@ -31,7 +31,7 @@ namespace ByteBank
                         acao.DeletarUsuario(acao.cpfs, acao.titulares, acao.senhas, acao.saldos);
                         break;
                     case 3:
-                        acao.ListarTodasAsContas(acao.cpfs, acao.titulares, acao.senhas, acao.saldos);
+                        acao.ListarTodasAsContas(acao.cpfs, acao.titulares, acao.saldos);
                         break;
                     case 4:
                         acao.ApresentarUsuario(acao.cpfs, acao.titulares, acao.saldos);

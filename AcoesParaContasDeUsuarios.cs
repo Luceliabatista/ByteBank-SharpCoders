@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ namespace ByteBank
             Console.WriteLine("2 - Alterar Titular");
             Console.WriteLine("3 - Alterar Senha");
             Console.WriteLine("4 - Alterar Saldo");
+            Console.WriteLine("5 - Efetuar Tranferência de saldo");
         }
 
         public void AlterarContaDeUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
@@ -47,6 +49,9 @@ namespace ByteBank
                 Console.WriteLine("Não é possível exibir esta conta");
                 Console.WriteLine("MOTIVO: Conta não encontrada");
                 Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
             }
             else
             {
@@ -66,9 +71,49 @@ namespace ByteBank
                     case 4:
                         AlterarSaldo(indexParaAlterar, saldos);
                         break;
+                    case 5:
+                        TransferirValoresEntreContas(indexParaAlterar, saldos);
+                        break;
                 }
             }
         }
+        public void TransferirValoresEntreContas(int index, List<double> saldos)
+        {
+            Console.Write("Favor confirmar o cpf da conta que irá transferir o valor: ");
+            string cpfParaAlterar = Console.ReadLine();
+            int indexParaAlterar = cpfs.FindIndex(cpf => cpf == cpfParaAlterar);
+
+            Console.Write("Digite o cpf da conta que receberá o valor: ");
+            string cpfParaTransferir = Console.ReadLine();
+            int indexParaTransferir = cpfs.FindIndex(cpf => cpf == cpfParaTransferir);
+
+            if (indexParaTransferir == -1)
+            {
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("MOTIVO: Conta não encontrada");
+            }
+            else
+            {
+                Console.WriteLine($"Qual o valor que deseja tranferir para {titulares[indexParaTransferir]}: ");
+                double valorTranferencia = double.Parse(Console.ReadLine());
+                if (saldos[indexParaAlterar] >= valorTranferencia)
+                {
+                    saldos[indexParaAlterar] -= valorTranferencia;
+                    saldos[indexParaTransferir] += valorTranferencia;
+                    Console.WriteLine("Tranferência realizada com sucesso!");
+                }
+                else
+                {
+                    Console.WriteLine("Saldo insuficiente para transferência");
+
+                }
+            }
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
 
         public void AlterarCPF(int index, List<string> cpfs)
         {
@@ -85,6 +130,9 @@ namespace ByteBank
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Titular alterado com sucesso!");
             Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
         public void AlterarSenha(int index, List<string> senhas)
         {
@@ -93,6 +141,9 @@ namespace ByteBank
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Senha alterado com sucesso!");
             Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
         public void AlterarSaldo(int index, List<double> saldos)
         {
@@ -101,15 +152,29 @@ namespace ByteBank
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Saldo alterado com sucesso!");
             Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
 
-        public void ListarTodasAsContas(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+        public void ListarTodasAsContas(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
-            for (int i = 0; i < cpfs.Count; ++i)
+            if (cpfs.Count <= 0)
             {
                 Console.WriteLine("-----------------------------------");
-                ApresentaConta(i, cpfs, titulares, saldos);
+                Console.WriteLine("Não há contas cadastradas até o momento.");
                 Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            else
+            {
+                for (int i = 0; i < cpfs.Count; ++i)
+                {
+                    Console.WriteLine("-----------------------------------");
+                    ApresentaConta(i, cpfs, titulares, saldos);
+                }
             }
         }
 
@@ -124,20 +189,34 @@ namespace ByteBank
                 Console.WriteLine("-----------------------------------");
                 Console.WriteLine("Não é possível exibir esta conta");
                 Console.WriteLine("MOTIVO: Conta não encontrada");
-                Console.WriteLine("-----------------------------------");
             }
             else
             {
                 Console.WriteLine("-----------------------------------");
                 ApresentaConta(indexParaApresentar, cpfs, titulares, saldos);
-                Console.WriteLine("-----------------------------------");
             }
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         public void ApresentaConta(int index, List<string> cpfs, List<string> titulares, List<double> saldos)
         {
-            Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R$ {saldos[index].ToString("C")}");
-
+            if (index == -1)
+            {
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Não foi possível deletar este CPF");
+                Console.WriteLine("MOTIVO: Conta não encontrada.");
+            }
+            else
+            {
+                Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R$ {saldos[index].ToString("C")}");
+            }
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         public void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
@@ -153,6 +232,9 @@ namespace ByteBank
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Novo usuário registrado com sucesso!");
             Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         public void DeletarUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
@@ -168,6 +250,9 @@ namespace ByteBank
                 Console.WriteLine("Não foi possível deletar este CPF");
                 Console.WriteLine("MOTIVO: Conta não encontrada.");
                 Console.WriteLine("-----------------------------------");
+                Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+                Console.ReadLine();
+                Console.Clear();
             }
 
             cpfs.Remove(cpfParaDeletar);
@@ -178,6 +263,9 @@ namespace ByteBank
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Conta deletada com sucesso!");
             Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
 
         }
 
@@ -186,6 +274,9 @@ namespace ByteBank
             Console.WriteLine("-----------------------------------");
             Console.WriteLine($"Total acumulado no banco: {saldos.Sum().ToString("C")}");
             Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Tecle Enter para voltar ao menu anterior");
+            Console.ReadLine();
+            Console.Clear();
         }
     }
 }
