@@ -3,10 +3,14 @@ using ByteBank.Entities.LogIn;
 using ByteBank.Entities.NewRegister;
 
 
-namespace ByteBank {
-    public class Program {
-        public static void Main( string[] args ) {
-            static void ShowMenu() {
+namespace ByteBank
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            static void ShowMenu()
+            {
                 Console.WriteLine("Por favor, digite a opção desejada: ");
                 Console.WriteLine("1 - Criar conta de usuário");
                 Console.WriteLine("2 - Efetuar Login");
@@ -21,11 +25,13 @@ namespace ByteBank {
             int option;
 
             //Menu de opções iniciais de acesso que todos os usuários, cadastrados ou ainda não, podem ter ao ByteBank.
-            do {
+            do
+            {
                 ShowMenu();
                 option = int.Parse(Console.ReadLine());
 
-                switch (option) {
+                switch (option)
+                {
                     case 1:
                         Register.RegistrarNovoUsuario(register.cpfs, register.titulares, register.senhas, register.saldos);
                         break;
