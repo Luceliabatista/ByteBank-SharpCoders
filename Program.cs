@@ -1,49 +1,39 @@
-﻿using System;
-using System.Globalization;
-using System.Reflection;
+﻿using ByteBank.Entities;
+using ByteBank.Entities.LogIn;
+using ByteBank.Entities.NewRegister;
 
-namespace ByteBank
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            AcoesParaContasDeUsuarios acao = new AcoesParaContasDeUsuarios();
 
-            Console.WriteLine("Seja Bem Vindo ao ByteBank!");
+namespace ByteBank {
+    public class Program {
+        public static void Main( string[] args ) {
+            static void ShowMenu() {
+                Console.WriteLine("Por favor, digite a opção desejada: ");
+                Console.WriteLine("1 - Criar conta de usuário");
+                Console.WriteLine("2 - Efetuar Login");
+                Console.WriteLine("0 - Para sair do programa");
+            }
 
+            Log log = new(); //Instanciando objeto para área de usuários JÁ cadastrados.
+            Register register = new(); //Instanciando objeto para cadastro de novo usuário.
+            ClassFinalizer finalizer = new(); //Instanciando objeto que executa a ação padrão que finaliza as classes.
+
+            Console.WriteLine("Olá! Seja Bem Vinda(o) ao ByteBank!");
             int option;
 
-            do
-            {
-                acao.ShowMenu();
+            //Menu de opções iniciais de acesso que todos os usuários, cadastrados ou ainda não, podem ter ao ByteBank.
+            do {
+                ShowMenu();
                 option = int.Parse(Console.ReadLine());
 
-                switch (option)
-                {
-                    case 0:
-                        Console.WriteLine("Estou encerrando o programa...");
-                        break;
+                switch (option) {
                     case 1:
-                        acao.RegistrarNovoUsuario(acao.cpfs, acao.titulares, acao.senhas, acao.saldos);
+                        Register.RegistrarNovoUsuario(register.cpfs, register.titulares, register.senhas, register.saldos);
                         break;
                     case 2:
-                        acao.DeletarUsuario(acao.cpfs, acao.titulares, acao.senhas, acao.saldos);
-                        break;
-                    case 3:
-                        acao.ListarTodasAsContas(acao.cpfs, acao.titulares, acao.saldos);
-                        break;
-                    case 4:
-                        acao.ApresentarUsuario(acao.cpfs, acao.titulares, acao.saldos);
-                        break;
-                    case 5:
-                        acao.ApresentarValorAcumulado(acao.saldos);
-                        break;
-                    case 6:
-                        acao.AlterarContaDeUsuario(acao.cpfs, acao.titulares, acao.senhas, acao.saldos);
+                        log.LogIn(register.cpfs, register.titulares, register.senhas, register.saldos);
                         break;
                 }
-
+                if (option != 0) { finalizer.Finalizer(); }
             } while (option != 0);
 
         }
