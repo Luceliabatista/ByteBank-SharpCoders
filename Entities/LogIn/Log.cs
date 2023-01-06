@@ -16,7 +16,7 @@ namespace ByteBank.Entities.LogIn
 
         ClassFinalizer finalizer = new();
 
-        /Método que realiza a verificação de login na conta de usuário
+        //Método que realiza a verificação de login na conta de usuário
         public void LogIn(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Clear();
