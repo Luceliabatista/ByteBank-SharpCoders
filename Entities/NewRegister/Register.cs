@@ -1,4 +1,5 @@
 using ByteBank.Entities;
+
 namespace ByteBank.Entities.NewRegister
 {
     public class Register
@@ -8,9 +9,13 @@ namespace ByteBank.Entities.NewRegister
         public List<string> senhas = new List<string>();
         public List<double> saldos = new List<double>();
 
-        //Método que realizao cadastro de novos usuários no "banco de dados"
-        public static void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+        ClassFinalizer finalizer = new();
+
+        //Método que realiza o cadastro de novos usuários no "banco de dados"
+        public void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
+            Console.Clear();
+            Console.WriteLine("   CADASTRO   ");
             Console.WriteLine("Digite o cpf: ");
             string cpfVerificado = Console.ReadLine();
             int indexCpfVerificado = cpfs.FindIndex(cpf => cpf == cpfVerificado);
@@ -30,7 +35,7 @@ namespace ByteBank.Entities.NewRegister
             {
                 Console.WriteLine("CPF já possui cadastro ativo no ByteBank");
             }
-
+            finalizer.Finalizer();
         }
     }
 }
