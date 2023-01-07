@@ -45,8 +45,9 @@ namespace ByteBank.Entities.LogIn
         //Menu de opções de alterações possíveis para usuários cadastrados
         static void Options(int indexCpfParaLogar, List<string> titulares)
         {
+            string[] nome = titulares[indexCpfParaLogar].Split(' ');
             Console.Clear();
-            Console.WriteLine($"Olá {titulares[indexCpfParaLogar]}!");
+            Console.WriteLine($"Olá {nome[0]}!");
             Console.WriteLine("Digite a opção desejada: ");
             Console.WriteLine("1 - Exibir meus Dados");
             Console.WriteLine("2 - Alterar dados");
@@ -109,7 +110,7 @@ namespace ByteBank.Entities.LogIn
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("   DADOS CADASTRADOS   ");
+                    Console.WriteLine("   DADOS CADASTRADOS   \n");
                     Console.WriteLine($"CPF = {cpfs[indexCpfParaLogar]} | Titular = {titulares[indexCpfParaLogar]} | Saldo = R$ {saldos[indexCpfParaLogar].ToString("C")}");
                 }
             }

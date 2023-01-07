@@ -1,4 +1,5 @@
 using ByteBank.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ByteBank.Entities.NewRegister
 {
